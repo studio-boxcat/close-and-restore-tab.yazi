@@ -20,6 +20,12 @@ local _close_and_switch = ya.sync(function(state, idx)
 end)
 
 local close_to_left = ya.sync(function(state)
+    -- Quit immediately when closing the last tab (no confirmation)
+    if #cx.tabs == 1 then
+        ya.emit("quit", {})
+        return
+    end
+
     local active_idx = tonumber(cx.tabs.idx) - 1
     local target_idx = active_idx - 1
     if active_idx == 0 then
@@ -31,6 +37,12 @@ local close_to_left = ya.sync(function(state)
 end)
 
 local close_to_right = ya.sync(function(state)
+    -- Quit immediately when closing the last tab (no confirmation)
+    if #cx.tabs == 1 then
+        ya.emit("quit", {})
+        return
+    end
+
     local total_tabs = #cx.tabs
     local active_idx = tonumber(cx.tabs.idx) - 1
     local target_idx = active_idx
